@@ -30,7 +30,7 @@ public class RegenManager implements Runnable, Listener{
                     continue;
                 }
             }
-            if (player.getFoodLevel() >= 18 && player.getHealth() < player.getMaxHealth()) {
+            if (!player.isDead() && player.getFoodLevel() >= 18 && player.getHealth() < player.getMaxHealth()) {
                 player.setHealth(player.getHealth() + 1);
                 //Do not regen this player for the next 4 seconds
                 lastRegens.put(player.getUniqueId(), now + 4000);
