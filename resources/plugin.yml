@@ -1,0 +1,4 @@
+name: Regen1.8
+main: net.avatar.realms.spigot.regen18.RegenPlugin
+authors: [Noko]
+version: 1.0.0
