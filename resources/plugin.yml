@@ -1,4 +1,6 @@
 name: Regen1.8
 main: net.avatar.realms.spigot.regen18.RegenPlugin
 authors: [Noko]
+softdepend: [Multiverse-Core]
 version: 1.0.0
+load: POSTWORLD
