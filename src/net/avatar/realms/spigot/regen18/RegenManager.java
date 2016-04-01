@@ -30,17 +30,20 @@ public class RegenManager implements Runnable, Listener{
                     continue;
                 }
             }
-            if (!player.isDead() && player.getFoodLevel() >= 18 && player.getHealth() < player.getMaxHealth()) {
-                double newHealth = player.getHealth() + 1;
-                if (newHealth > 20.0) {
-                    newHealth = 20.0;
+            if (!player.isDead() && player.getFoodLevel() >= 18) {
+                double max = player.getMaxHealth();
+                if (player.getHealth() < max) {
+                    double newHealth = player.getHealth() + 1;
+                    if (newHealth > max) {
+                        newHealth = max;
+                    }
+                    else if (newHealth < 0.0) {
+                        newHealth = 0.0;
+                    }
+                    player.setHealth(newHealth);
+                    //Do not regen this player for the next 4 seconds
+                    lastRegens.put(player.getUniqueId(), now + 4000);
                 }
-                else if (newHealth < 0.0) {
-                    newHealth = 0.0;
-                }
-                player.setHealth(newHealth);
-                //Do not regen this player for the next 4 seconds
-                lastRegens.put(player.getUniqueId(), now + 4000);
             }
         }
     }
