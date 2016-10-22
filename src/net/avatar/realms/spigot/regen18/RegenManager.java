@@ -18,31 +18,43 @@ public class RegenManager implements Runnable, Listener{
     private Map<UUID, Long> lastRegens;
 
     public RegenManager() {
+        
         lastRegens = new HashMap<UUID, Long>();
     }
 
     @Override
     public void run() {
         long now = System.currentTimeMillis();
+        
         for (Player player : Bukkit.getOnlinePlayers()) {
+            
             if (lastRegens.containsKey(player.getUniqueId())) {
+                
                 if (now < lastRegens.get(player.getUniqueId())) {
+                    
                     continue;
                 }
             }
+            
             if (!player.isDead() && player.getFoodLevel() >= 18) {
+                
                 double max = player.getMaxHealth();
+                
                 if (player.getHealth() < max) {
+                    
                     double newHealth = player.getHealth() + 1;
-                    if (newHealth > max) {
+                    
+                    if (newHealth > max)
                         newHealth = max;
-                    }
-                    else if (newHealth < 0.0) {
+                    
+                    else if (newHealth < 0.0)
                         newHealth = 0.0;
-                    }
+                    
                     player.setHealth(newHealth);
+                    
                     //Do not regen this player for the next 4 seconds
                     lastRegens.put(player.getUniqueId(), now + 4000);
+                    
                 }
             }
         }
@@ -50,7 +62,9 @@ public class RegenManager implements Runnable, Listener{
 
     @EventHandler
     public void onPlayerDisconnect(PlayerQuitEvent event) {
+        
         if (lastRegens.containsKey(event.getPlayer().getUniqueId())) {
+            
             lastRegens.remove(event.getPlayer().getUniqueId());
         }
     }
